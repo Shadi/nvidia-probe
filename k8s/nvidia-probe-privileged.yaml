@@ -3,15 +3,20 @@ kind: Job
 metadata:
   name: nvidia-probe
 spec:
+  backoffLimit: 0
   template:
     spec:
       restartPolicy: Never
-      # Run on every node, or pin to a specific node:
-      # nodeSelector:
-      #   kubernetes.io/hostname: my-gpu-node
+      nodeSelector:
+        cloud.google.com/gke-nodepool: gpu-node-pool
+      tolerations:
+        - key: nvidia.com/gpu
+          operator: Equal
+          value: present
+          effect: NoSchedule
       containers:
         - name: nvidia-probe
-          image: nvidia-probe:latest
+          image: ghcr.io/shadi/nvidia-probe:latest
           securityContext:
             privileged: true
           volumeMounts:
