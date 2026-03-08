@@ -49,6 +49,8 @@ const NVML_SEARCH_PATHS: &[&str] = &[
     "/host/usr/lib64/libnvidia-ml.so.1",
     "/host/usr/lib/x86_64-linux-gnu/libnvidia-ml.so.1",
     "/host/usr/lib/aarch64-linux-gnu/libnvidia-ml.so.1",
+    // GKE / cos nodes
+    "/host/home/kubernetes/bin/nvidia/lib64/libnvidia-ml.so.1",
 ];
 
 struct Nvml {
