@@ -1,0 +1,24 @@
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: nvidia-probe
+spec:
+  template:
+    spec:
+      restartPolicy: Never
+      # Run on every node, or pin to a specific node:
+      # nodeSelector:
+      #   kubernetes.io/hostname: my-gpu-node
+      containers:
+        - name: nvidia-probe
+          image: nvidia-probe:latest
+          securityContext:
+            privileged: true
+          volumeMounts:
+            - name: host
+              mountPath: /host
+              readOnly: true
+      volumes:
+        - name: host
+          hostPath:
+            path: /
